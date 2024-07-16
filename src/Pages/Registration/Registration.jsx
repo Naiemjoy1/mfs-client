@@ -77,6 +77,22 @@ const Registration = () => {
           />
           {errors.name && <span>This field is required</span>}
         </div>
+        <div className="form-control w-1/2">
+          <label className="label">
+            <span className="label-text">User Type</span>
+          </label>
+          <select
+            className="select select-bordered w-full max-w-xs"
+            {...register("userType", { required: true })}
+          >
+            <option disabled selected>
+              Select User Type?
+            </option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+          {errors.userType && <span>This field is required</span>}
+        </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Profile Image</span>

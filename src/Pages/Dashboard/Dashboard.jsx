@@ -12,6 +12,7 @@ const Dashboard = () => {
       <p>{user?.pin}</p>
       <p>{user?.balance}</p>
       <p>{user?.status}</p>
+      <p>{user?.userType}</p>
       <img src={user?.profileImage} alt="" />
       <button className="btn btn-primary" onClick={logout}>
         Logout
