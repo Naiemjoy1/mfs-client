@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
-  const handleLogOut = () => {
-    logout()
+  const { user, logOut } = useAuth();
+  const handlelogOut = () => {
+    logOut()
       .then(() => {})
       .catch((error) => console.log(error));
   };
@@ -104,10 +104,10 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    onClick={handleLogOut}
+                    onClick={handlelogOut}
                     className="btn btn-sm btn-ghost"
                   >
-                    Logout
+                    logOut
                   </button>
                 </li>
               </ul>
