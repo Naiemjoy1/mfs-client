@@ -124,7 +124,7 @@ const Registration = () => {
                 Select User Type?
               </option>
               <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="agent">Agent</option>
             </select>
             {errors.userType && <span>This field is required</span>}
           </div>
