@@ -8,7 +8,7 @@ import useUsers from "../../../Components/Hooks/useUsers";
 const SendMoney = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((u) => u.email === user.email);
+  const currentUser = users.find((users) => users.email === user.email);
   const {
     register,
     handleSubmit,

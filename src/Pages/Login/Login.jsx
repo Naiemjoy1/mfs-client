@@ -25,7 +25,7 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/profile";
       });
     } catch (error) {
       console.error("Login failed", error.response.data);
