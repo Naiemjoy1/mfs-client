@@ -1,16 +1,17 @@
 import moment from "moment";
 import useAuth from "../../../Components/Hooks/useAuth";
 import useLogs from "../../../Components/Hooks/useLogs";
-import useUsers from "../../../Components/Hooks/useUsers";
+import useAdmin from "../../../Components/Hooks/useAdmin";
 
 const History = () => {
   const { user } = useAuth();
   const [logs] = useLogs();
-  const { users } = useUsers();
-  const currentUser = users.find((users) => users.email === user.email);
+  const [userRole] = useAdmin();
 
   let userLogs = [];
-  if (currentUser && currentUser.userType === "agent") {
+  if (userRole === "admin") {
+    userLogs = logs;
+  } else if (userRole === "agent") {
     userLogs = logs
       .filter((log) => log.sender === user.email || log.receiver === user.email)
       .slice(0, 20);
