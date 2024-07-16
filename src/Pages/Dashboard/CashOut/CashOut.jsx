@@ -28,7 +28,7 @@ const CashOut = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    if (currentUser.userType !== "user") {
+    if (currentUser?.userType !== "user") {
       Swal.fire({
         title: "Error!",
         text: "Only users can cash out.",

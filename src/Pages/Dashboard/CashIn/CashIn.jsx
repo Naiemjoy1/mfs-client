@@ -29,7 +29,7 @@ const CashIn = () => {
     setLoading(true);
 
     // Prevent users from sending money
-    if (currentUser.userType !== "agent") {
+    if (currentUser?.userType !== "agent") {
       Swal.fire({
         title: "Error!",
         text: "Only agents can do cash in.",
