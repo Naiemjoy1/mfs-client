@@ -1,9 +1,7 @@
-import Registration from "../Registration/Registration";
-
 const Home = () => {
   return (
     <div className="container mx-auto">
-      <Registration></Registration>
+      <p>MFS Project</p>
     </div>
   );
 };

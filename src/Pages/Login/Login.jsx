@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <div className="w-1/3 mx-auto min-h-[calc(100vh-246px)]">
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="form-control">
           <label className="label">
@@ -55,21 +55,35 @@ const LoginForm = () => {
         </div>
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Pin</span>
+            <span className="label-text">PIN (5 digits)</span>
           </label>
           <input
-            type="number"
+            type="text"
             name="pin"
-            placeholder="password"
+            placeholder="PIN"
             className="input input-bordered"
-            {...register("pin", { required: true })}
+            {...register("pin", {
+              required: true,
+              minLength: 5,
+              maxLength: 5,
+              pattern: /^[0-9]*$/,
+            })}
+            onInput={(e) => {
+              e.target.value = e.target.value.replace(/[^0-9]/g, "");
+            }}
           />
-          {errors.pin && <span>This field is required</span>}
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">
-              Forgot password?
-            </a>
-          </label>
+          {errors.pin && errors.pin.type === "required" && (
+            <span>This field is required</span>
+          )}
+          {errors.pin && errors.pin.type === "minLength" && (
+            <span>PIN must be exactly 5 digits long</span>
+          )}
+          {errors.pin && errors.pin.type === "maxLength" && (
+            <span>PIN must be exactly 5 digits long</span>
+          )}
+          {errors.pin && errors.pin.type === "pattern" && (
+            <span>PIN must contain only digits (0-9)</span>
+          )}
         </div>
         <div className="form-control mt-6">
           <button type="submit" className="btn btn-primary">
