@@ -3,9 +3,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
+import useUsers from "../../../Components/Hooks/useUsers";
 
 const SendMoney = () => {
   const { user } = useAuth();
+  const { users, refetchUsers } = useUsers();
+  const currentUser = users.find((u) => u.email === user.email);
   const {
     register,
     handleSubmit,
@@ -13,13 +16,17 @@ const SendMoney = () => {
     reset,
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+
+  const validateReceiver = (value) => {
+    if (!value) return "This field is required";
+    if (!/^\d{10}$/.test(value) && !/\S+@\S+\.\S+/.test(value)) {
+      return "Invalid input. Please enter a 10-digit number or valid email";
+    }
+    return true;
+  };
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setError(null);
-    setSuccessMessage(null);
 
     try {
       const confirmResult = await Swal.fire({
@@ -40,18 +47,22 @@ const SendMoney = () => {
           pin: data.pin,
         });
 
-        setSuccessMessage(response.data.message);
         Swal.fire({
           title: "Success!",
           text: response.data.message,
           icon: "success",
         });
         reset(); // Reset form fields
+        refetchUsers(); // Refetch users data
       } else {
         Swal.fire("Cancelled", "Transaction cancelled.", "info");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Something went wrong");
+      Swal.fire({
+        title: "Error!",
+        text: error.response?.data?.message || "Something went wrong",
+        icon: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -59,7 +70,7 @@ const SendMoney = () => {
 
   return (
     <div>
-      <h2>Send Money</h2>
+      <h2>Current Balance: {currentUser?.balance}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="flex justify-center gap-6">
           <div className="form-control w-1/2">
@@ -82,12 +93,17 @@ const SendMoney = () => {
             <input
               type="text"
               name="receiverIdentifier"
-              placeholder="Receiver's email or mobile"
+              placeholder="Receiver's email or 10-digit number"
               className="input input-bordered"
-              {...register("receiverIdentifier", { required: true })}
+              {...register("receiverIdentifier", {
+                required: true,
+                validate: validateReceiver,
+              })}
             />
             {errors.receiverIdentifier && (
-              <span className="text-red-500">This field is required</span>
+              <span className="text-red-500">
+                {errors.receiverIdentifier.message}
+              </span>
             )}
           </div>
         </div>
@@ -151,10 +167,6 @@ const SendMoney = () => {
             {loading ? "Sending..." : "Send Money"}
           </button>
         </div>
-        {error && <div className="text-red-500">{error}</div>}
-        {successMessage && (
-          <div className="text-green-500">{successMessage}</div>
-        )}
       </form>
     </div>
   );
