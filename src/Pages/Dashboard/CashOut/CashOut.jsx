@@ -4,11 +4,13 @@ import useAuth from "../../../Components/Hooks/useAuth";
 import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useStatus from "../../../Components/Hooks/useStatus";
 
 const CashOut = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find((users) => users.email === user.email);
+  const [userStatus] = useStatus();
   const {
     register,
     handleSubmit,
@@ -169,13 +171,24 @@ const CashOut = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-          <button
-            type="submit"
-            className={`btn btn-primary ${loading && "opacity-50 cursor-wait"}`}
-            disabled={loading}
-          >
-            {loading ? "Sending..." : "Cash Out"}
-          </button>
+          {userStatus === "active" ? (
+            <button
+              type="submit"
+              className={`btn btn-primary ${
+                loading && "opacity-50 cursor-wait"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send Money"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary opacity-50 cursor-not-allowed"
+            >
+              Wait for account active
+            </button>
+          )}
         </div>
       </form>
     </div>

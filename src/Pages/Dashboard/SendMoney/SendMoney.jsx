@@ -4,9 +4,11 @@ import axios from "axios";
 import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
 import useUsers from "../../../Components/Hooks/useUsers";
+import useStatus from "../../../Components/Hooks/useStatus";
 
 const SendMoney = () => {
   const { user } = useAuth();
+  const [userStatus] = useStatus();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find(
     (users) => users.email === user.email && users.userType === "user"
@@ -169,13 +171,24 @@ const SendMoney = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-          <button
-            type="submit"
-            className={`btn btn-primary ${loading && "opacity-50 cursor-wait"}`}
-            disabled={loading}
-          >
-            {loading ? "Sending..." : "Send Money"}
-          </button>
+          {userStatus === "active" ? (
+            <button
+              type="submit"
+              className={`btn btn-primary ${
+                loading && "opacity-50 cursor-wait"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send Money"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary opacity-50 cursor-not-allowed"
+            >
+              Wait for account active
+            </button>
+          )}
         </div>
       </form>
     </div>

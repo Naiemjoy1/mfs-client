@@ -164,7 +164,7 @@ const UserManagement = () => {
                   <td>
                     {user.status === "active" ? (
                       <button
-                        onClick={() => handleChangeStatus(user, "pending")}
+                        onClick={() => handleChangeStatus(user, "block")}
                         className="btn bg-yellow-500 hover:bg-yellow-600 text-white btn-xs"
                       >
                         <FaUserLargeSlash />

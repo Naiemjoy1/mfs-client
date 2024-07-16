@@ -1,10 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
-import useAdmin from "../../Components/Hooks/useAdmin";
+import useRole from "../../Components/Hooks/useRole";
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const [userRole] = useAdmin();
+  const [userRole] = useRole();
 
   return (
     <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)]">

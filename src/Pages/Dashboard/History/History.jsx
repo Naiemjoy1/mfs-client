@@ -1,12 +1,12 @@
 import moment from "moment";
 import useAuth from "../../../Components/Hooks/useAuth";
 import useLogs from "../../../Components/Hooks/useLogs";
-import useAdmin from "../../../Components/Hooks/useAdmin";
+import useRole from "../../../Components/Hooks/useRole";
 
 const History = () => {
   const { user } = useAuth();
   const [logs] = useLogs();
-  const [userRole] = useAdmin();
+  const [userRole] = useRole();
 
   let userLogs = [];
   if (userRole === "admin") {

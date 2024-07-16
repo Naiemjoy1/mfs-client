@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
 import axios from "axios";
 
-const useAdmin = () => {
+const useStatus = () => {
   const { user } = useAuth();
-  const [userType, setUserType] = useState(null);
+  const [userStatus, setUserStatus] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const useAdmin = () => {
       axios
         .get(`http://localhost:3000/user/${user.email}`)
         .then((response) => {
-          setUserType(response.data.userType);
+          setUserStatus(response.data.status);
           setLoading(false);
         })
         .catch((error) => {
@@ -24,7 +24,7 @@ const useAdmin = () => {
     }
   }, [user]);
 
-  return [userType, loading];
+  return [userStatus, loading];
 };
 
-export default useAdmin;
+export default useStatus;
