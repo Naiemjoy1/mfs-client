@@ -9,7 +9,7 @@ import useStatus from "../../../Components/Hooks/useStatus";
 const CashOut = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((users) => users.email === user.email);
+  const currentUser = users.find((u) => u.email === user.email);
   const [userStatus] = useStatus();
   const {
     register,
@@ -18,6 +18,7 @@ const CashOut = () => {
     reset,
   } = useForm();
   const [loading, setLoading] = useState(false);
+  const [feeAmount, setFeeAmount] = useState(0); // State to store fee amount
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
@@ -43,7 +44,13 @@ const CashOut = () => {
     try {
       const confirmResult = await Swal.fire({
         title: "Are you sure?",
-        text: `You are sure send money to ${data.receiverIdentifier}`,
+        html: `You are sending <b>${
+          data.amount
+        }</b> with a fee of <b>${feeAmount.toFixed(
+          2
+        )}</b>.<br>Confirm this transaction to <b>${
+          data.receiverIdentifier
+        }</b>?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -61,7 +68,9 @@ const CashOut = () => {
 
         Swal.fire({
           title: "Success!",
-          text: response.data.message,
+          text: `${
+            response.data.message
+          }. Fee deducted: ${response.data.fee.toFixed(2)}`,
           icon: "success",
         });
         reset();
@@ -77,6 +86,16 @@ const CashOut = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAmountChange = (e) => {
+    const numericAmount = parseFloat(e.target.value);
+    if (!isNaN(numericAmount) && numericAmount > 0) {
+      const fee = numericAmount * 0.015; // Calculate fee
+      setFeeAmount(fee); // Update fee amount state
+    } else {
+      setFeeAmount(0); // Reset fee amount if amount is invalid
     }
   };
 
@@ -130,6 +149,7 @@ const CashOut = () => {
               placeholder="Amount"
               className="input input-bordered"
               {...register("amount", { required: true, min: 50 })}
+              onChange={handleAmountChange}
             />
             {errors.amount && (
               <span className="text-red-500">
