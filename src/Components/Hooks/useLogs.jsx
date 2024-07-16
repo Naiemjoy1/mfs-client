@@ -8,7 +8,7 @@ const useLogs = () => {
 
   useEffect(() => {
     axiosPublic
-      .get("/transaction-history")
+      .get("/history")
       .then((response) => {
         setLogs(response.data);
         setLoading(false);
