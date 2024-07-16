@@ -81,6 +81,37 @@ const UserManagement = () => {
       });
   };
 
+  const handleRoleChange = (user, userType) => {
+    axiosSecure
+      .patch(`/users/admin/${user._id}`, { userType })
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          refetchUsers();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.name}'s role changed to ${userType}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to update user's role.",
+            icon: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error changing role:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong.",
+          icon: "error",
+        });
+      });
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -119,7 +150,17 @@ const UserManagement = () => {
                     <br />
                     {user?.mobile}
                   </td>
-                  <td>{user?.userType}</td>
+                  <td>
+                    <select
+                      className="select select-bordered max-w-xs text-black"
+                      value={user.userType}
+                      onChange={(e) => handleRoleChange(user, e.target.value)}
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                      <option value="agent">Agent</option>
+                    </select>
+                  </td>
                   <td>
                     {user.status === "active" ? (
                       <button
