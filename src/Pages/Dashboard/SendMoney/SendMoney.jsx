@@ -8,7 +8,9 @@ import useUsers from "../../../Components/Hooks/useUsers";
 const SendMoney = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((users) => users.email === user.email);
+  const currentUser = users.find(
+    (users) => users.email === user.email && users.userType === "user"
+  );
   const {
     register,
     handleSubmit,
@@ -21,6 +23,14 @@ const SendMoney = () => {
     if (!value) return "This field is required";
     if (!/^\d{10}$/.test(value) && !/\S+@\S+\.\S+/.test(value)) {
       return "Invalid input. Please enter a 10-digit number or valid email";
+    }
+    const receiver = users.find(
+      (user) =>
+        (user.email === value || user.mobile === value) &&
+        user.userType === "user"
+    );
+    if (!receiver) {
+      return "Receiver must be a user";
     }
     return true;
   };
