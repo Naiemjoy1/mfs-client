@@ -1,14 +1,14 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import useUsers from "../../../Components/Hooks/useUsers";
 import useAuth from "../../../Components/Hooks/useAuth";
+import useUsers from "../../../Components/Hooks/useUsers";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const CashOut = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((u) => u.email === user.email);
+  const currentUser = users.find((users) => users.email === user.email);
   const {
     register,
     handleSubmit,
@@ -28,11 +28,10 @@ const CashOut = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    // Prevent agents from sending money
-    if (currentUser?.userType === "agent") {
+    if (currentUser.userType !== "user") {
       Swal.fire({
         title: "Error!",
-        text: "Agents cannot cash out.",
+        text: "Only users can cash out.",
         icon: "error",
       });
       setLoading(false);
