@@ -1,8 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
+import useAdmin from "../../Components/Hooks/useAdmin";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const [userRole] = useAdmin();
 
   return (
     <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)]">
@@ -17,18 +19,26 @@ const Dashboard = () => {
               <NavLink to="/dashboard/profile">
                 <li>Profile</li>
               </NavLink>
-              <NavLink to="/dashboard/management">
-                <li>Users</li>
-              </NavLink>
-              <NavLink to="/dashboard/sendmoney">
-                <li>Send Money</li>
-              </NavLink>
-              <NavLink to="/dashboard/cashin">
-                <li>Cash In</li>
-              </NavLink>
-              <NavLink to="/dashboard/cashout">
-                <li>Cash Out</li>
-              </NavLink>
+              {userRole === "admin" && (
+                <NavLink to="/dashboard/management">
+                  <li>Users</li>
+                </NavLink>
+              )}
+              {userRole === "agent" && (
+                <NavLink to="/dashboard/cashin">
+                  <li>Cash In</li>
+                </NavLink>
+              )}
+              {userRole === "user" && (
+                <NavLink to="/dashboard/sendmoney">
+                  <li>Send Money</li>
+                </NavLink>
+              )}
+              {userRole === "user" && (
+                <NavLink to="/dashboard/cashout">
+                  <li>Cash Out</li>
+                </NavLink>
+              )}
               <NavLink to="/dashboard/history">
                 <li>History</li>
               </NavLink>
