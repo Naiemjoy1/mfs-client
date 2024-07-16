@@ -99,7 +99,7 @@ const Navbar = () => {
               <ul className="menu menu-sm dropdown-content mt-3 absolute right-0 w-52 shadow bg-base-100 rounded-box z-[10] hover-dropdown-content">
                 <li>
                   <button className="btn btn-sm btn-ghost">
-                    <a href="/dashboard">Dashboard</a>
+                    <a href="/dashboard/profile">Dashboard</a>
                   </button>
                 </li>
                 <li>
