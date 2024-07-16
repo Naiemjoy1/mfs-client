@@ -1,4 +1,4 @@
-import { useAuth } from "../../Components/AuthProvider/AuthProvider";
+import useAuth from "../../Components/Hooks/useAuth";
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
