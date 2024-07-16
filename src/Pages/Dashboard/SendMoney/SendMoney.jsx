@@ -20,6 +20,7 @@ const SendMoney = () => {
     reset,
   } = useForm();
   const [loading, setLoading] = useState(false);
+  const [fee, setFee] = useState(0);
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
@@ -37,13 +38,21 @@ const SendMoney = () => {
     return true;
   };
 
+  const calculateFee = (amount) => {
+    const numericAmount = parseFloat(amount);
+    if (!isNaN(numericAmount) && numericAmount > 100) {
+      return 5;
+    }
+    return 0;
+  };
+
   const onSubmit = async (data) => {
     setLoading(true);
 
     try {
       const confirmResult = await Swal.fire({
         title: "Are you sure?",
-        text: `You are sure send money to ${data.receiverIdentifier}`,
+        text: `You are sure to send money to ${data.receiverIdentifier}. Transaction fee: ${fee}`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -129,7 +138,11 @@ const SendMoney = () => {
               name="amount"
               placeholder="Amount"
               className="input input-bordered"
-              {...register("amount", { required: true, min: 50 })}
+              {...register("amount", {
+                required: true,
+                min: 50,
+                onChange: (e) => setFee(calculateFee(e.target.value)),
+              })}
             />
             {errors.amount && (
               <span className="text-red-500">
