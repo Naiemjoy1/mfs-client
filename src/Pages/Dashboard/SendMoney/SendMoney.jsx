@@ -93,8 +93,8 @@ const SendMoney = () => {
     <div>
       <h2>Current Balance: {currentUser?.balance}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-        <div className="flex justify-center gap-6">
-          <div className="form-control w-1/2">
+        <div className="lg:flex justify-center gap-6 space-y-4">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Sender</span>
             </label>
@@ -107,7 +107,7 @@ const SendMoney = () => {
               readOnly
             />
           </div>
-          <div className="form-control w-1/2">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Receiver</span>
             </label>
@@ -128,8 +128,8 @@ const SendMoney = () => {
             )}
           </div>
         </div>
-        <div className="flex justify-center gap-6">
-          <div className="form-control w-1/2">
+        <div className="lg:flex justify-center gap-6">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Amount</span>
             </label>
@@ -152,7 +152,7 @@ const SendMoney = () => {
               </span>
             )}
           </div>
-          <div className="form-control w-1/2">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">PIN (5 digits)</span>
             </label>

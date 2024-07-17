@@ -10,9 +10,9 @@ const Dashboard = () => {
   const currentUser = users.find((u) => u.email === user.email);
 
   return (
-    <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)]">
-      <div className="container mx-auto py-12 flex gap-4">
-        <div className="w-1/4 bg-[#eff3f4] px-10 py-6 rounded-xl flex flex-col justify-between gap-5">
+    <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)] px-5 lg:px-0">
+      <div className="container mx-auto py-12 lg:flex space-y-4 lg:space-y-0 gap-4">
+        <div className="lg:w-1/4 bg-[#eff3f4] px-10 py-6 rounded-xl flex flex-col justify-between gap-5">
           <section>
             <p className="text-center uppercase font-bold">MFS Dashboard</p>
             <div className="divider"></div>
@@ -73,7 +73,7 @@ const Dashboard = () => {
             <p>{currentUser?.name}</p>
           </section>
         </div>
-        <div className="w-3/4 bg-white px-10 py-6 rounded-xl">
+        <div className="lg:w-3/4 bg-white px-10 py-6 rounded-xl">
           <Outlet></Outlet>
         </div>
       </div>

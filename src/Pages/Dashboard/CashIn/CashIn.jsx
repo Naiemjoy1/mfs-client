@@ -86,13 +86,13 @@ const CashIn = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="lg:flex justify-between items-center">
         <h2>Current Balance: {currentUser?.balance}</h2>
         <Modal></Modal>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-        <div className="flex justify-center gap-6">
-          <div className="form-control w-1/2">
+        <div className="lg:flex justify-center gap-6 space-y-4">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Sender</span>
             </label>
@@ -105,7 +105,7 @@ const CashIn = () => {
               readOnly
             />
           </div>
-          <div className="form-control w-1/2">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Receiver</span>
             </label>
@@ -126,8 +126,8 @@ const CashIn = () => {
             )}
           </div>
         </div>
-        <div className="flex justify-center gap-6">
-          <div className="form-control w-1/2">
+        <div className="lg:flex justify-center gap-6 space-y-4">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">Amount</span>
             </label>
@@ -146,7 +146,7 @@ const CashIn = () => {
               </span>
             )}
           </div>
-          <div className="form-control w-1/2">
+          <div className="form-control lg:w-1/2">
             <label className="label">
               <span className="label-text">PIN (5 digits)</span>
             </label>

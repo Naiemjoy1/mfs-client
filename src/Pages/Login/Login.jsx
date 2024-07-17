@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-1/3 mx-auto min-h-[calc(100vh-246px)]">
+    <div className="lg:w-1/3 mx-auto min-h-[calc(100vh-246px)]">
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="form-control">
           <label className="label">
