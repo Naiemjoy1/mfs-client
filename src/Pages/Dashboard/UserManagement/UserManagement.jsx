@@ -1,12 +1,14 @@
 import Swal from "sweetalert2";
 import useUsers from "../../../Components/Hooks/useUsers";
-import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 import { FaUserLargeSlash } from "react-icons/fa6";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import useAxiosPublic from "../../../Components/Hooks/useAxiosPublic";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const UserManagement = () => {
   const { users, refetchUsers, loading } = useUsers();
+  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
   const handleDelete = (user) => {
@@ -20,7 +22,7 @@ const UserManagement = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure
+        axiosPublic
           .delete(`/users/${user._id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
@@ -184,12 +186,22 @@ const UserManagement = () => {
                       )}
                     </td>
                     <td>
-                      <button
+                      {/* <button
                         onClick={() => handleDelete(user)}
                         className="btn bg-red-500 hover:bg-red-600 text-white btn-xs"
                       >
                         <MdDelete />
-                      </button>
+                      </button> */}
+                      {user.userType !== "admin" && (
+                        <div>
+                          <button
+                            onClick={() => handleDelete(user)}
+                            className="btn bg-red-500 hover:bg-red-600 text-white btn-xs"
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
