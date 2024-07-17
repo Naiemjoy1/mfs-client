@@ -3,16 +3,16 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../Components/Hooks/useAuth";
 import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
-import axios from "axios";
 import useStatus from "../../../Components/Hooks/useStatus";
 import Modal from "../../../Shared/Modal/Modal";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const CashIn = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find((u) => u.email === user.email);
-  // console.log("currentUser", currentUser);
   const [userStatus] = useStatus();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -56,7 +56,7 @@ const CashIn = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post("http://localhost:3000/cash-in", {
+        const response = await axiosSecure.post("/cash-in", {
           senderEmail: user.email,
           receiverIdentifier: data.receiverIdentifier,
           amount: data.amount,
