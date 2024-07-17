@@ -6,7 +6,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
 const UserManagement = () => {
-  const { users, refetchUsers } = useUsers();
+  const { users, refetchUsers, loading } = useUsers();
   const axiosSecure = useAxiosSecure();
 
   const handleDelete = (user) => {
@@ -113,85 +113,91 @@ const UserManagement = () => {
   };
 
   return (
-    <div>
-      <div className="overflow-x-auto">
-        <div className="max-h-96 overflow-y-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th></th>
-                <th></th>
-                <th>Details</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users?.map((user, index) => (
-                <tr key={index}>
-                  <th>{index + 1}</th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src={user?.profileImage}
-                            alt="Avatar Tailwind CSS Component"
-                          />
+    <div className="relative">
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <span className="loading loading-ring loading-lg text-primary"></span>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <div className="max-h-96 overflow-y-auto">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Details</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {users?.map((user, index) => (
+                  <tr key={index}>
+                    <th>{index + 1}</th>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={user?.profileImage}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    {user?.name}
-                    <br />
-                    {user?.email}
-                    <br />
-                    {user?.mobile}
-                  </td>
-                  <td>
-                    <select
-                      className="select select-bordered max-w-xs text-black"
-                      value={user.userType}
-                      onChange={(e) => handleRoleChange(user, e.target.value)}
-                    >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                      <option value="agent">Agent</option>
-                    </select>
-                  </td>
-                  <td>
-                    {user.status === "active" ? (
-                      <button
-                        onClick={() => handleChangeStatus(user, "block")}
-                        className="btn bg-yellow-500 hover:bg-yellow-600 text-white btn-xs"
+                    </td>
+                    <td>
+                      {user?.name}
+                      <br />
+                      {user?.email}
+                      <br />
+                      {user?.mobile}
+                    </td>
+                    <td>
+                      <select
+                        className="select select-bordered max-w-xs text-black"
+                        value={user.userType}
+                        onChange={(e) => handleRoleChange(user, e.target.value)}
                       >
-                        <FaUserLargeSlash />
-                      </button>
-                    ) : (
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="agent">Agent</option>
+                      </select>
+                    </td>
+                    <td>
+                      {user.status === "active" ? (
+                        <button
+                          onClick={() => handleChangeStatus(user, "block")}
+                          className="btn bg-yellow-500 hover:bg-yellow-600 text-white btn-xs"
+                        >
+                          <FaUserLargeSlash />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleChangeStatus(user, "active")}
+                          className="btn bg-green-500 hover:bg-green-600 text-white btn-xs"
+                        >
+                          <IoMdCheckmarkCircle />
+                        </button>
+                      )}
+                    </td>
+                    <td>
                       <button
-                        onClick={() => handleChangeStatus(user, "active")}
-                        className="btn bg-green-500 hover:bg-green-600 text-white btn-xs"
+                        onClick={() => handleDelete(user)}
+                        className="btn bg-red-500 hover:bg-red-600 text-white btn-xs"
                       >
-                        <IoMdCheckmarkCircle />
+                        <MdDelete />
                       </button>
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => handleDelete(user)}
-                      className="btn bg-red-500 hover:bg-red-600 text-white btn-xs"
-                    >
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
