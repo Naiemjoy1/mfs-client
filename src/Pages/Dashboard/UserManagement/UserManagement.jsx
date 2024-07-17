@@ -3,12 +3,10 @@ import useUsers from "../../../Components/Hooks/useUsers";
 import { FaUserLargeSlash } from "react-icons/fa6";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import useAxiosPublic from "../../../Components/Hooks/useAxiosPublic";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const UserManagement = () => {
   const { users, refetchUsers, loading } = useUsers();
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
   const handleDelete = (user) => {
@@ -22,7 +20,7 @@ const UserManagement = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic
+        axiosSecure
           .delete(`/users/${user._id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
