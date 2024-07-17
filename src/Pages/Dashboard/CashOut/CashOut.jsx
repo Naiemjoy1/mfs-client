@@ -3,15 +3,17 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../Components/Hooks/useAuth";
 import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
-import axios from "axios";
 import useStatus from "../../../Components/Hooks/useStatus";
 import Modal from "../CashOutRequest/Modal";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const CashOut = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find((u) => u.email === user.email);
   const [userStatus] = useStatus();
+  const axiosSecure = useAxiosSecure();
+
   const {
     register,
     handleSubmit,
@@ -60,7 +62,7 @@ const CashOut = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post("http://localhost:3000/cash-out", {
+        const response = await axiosSecure.post("/cash-out", {
           senderEmail: user.email,
           receiverIdentifier: data.receiverIdentifier,
           amount: data.amount,
