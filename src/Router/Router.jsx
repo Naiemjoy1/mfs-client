@@ -10,6 +10,8 @@ import CashIn from "../Pages/Dashboard/CashIn/CashIn";
 import CashOut from "../Pages/Dashboard/CashOut/CashOut";
 import History from "../Pages/Dashboard/History/History";
 import UserManagement from "../Pages/Dashboard/UserManagement/UserManagement";
+import CashInRequest from "../Pages/Dashboard/CashInRequest/CashInRequest";
+import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
           {
             path: "management",
             element: <UserManagement></UserManagement>,
+          },
+          {
+            path: "cash-in-request",
+            element: <CashInRequest></CashInRequest>,
+          },
+          {
+            path: "cash-out-request",
+            element: <CashOutRequest></CashOutRequest>,
           },
         ],
       },

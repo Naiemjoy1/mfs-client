@@ -1,19 +1,16 @@
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Components/Hooks/useAuth";
-import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
-import axios from "axios";
 import useStatus from "../../../Components/Hooks/useStatus";
-import Modal from "../../../Shared/Modal/Modal";
+import useUsers from "../../../Components/Hooks/useUsers";
+import useAuth from "../../../Components/Hooks/useAuth";
 
-const CashIn = () => {
+const CashInRequest = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((u) => u.email === user.email);
-  // console.log("currentUser", currentUser);
+  const currentUser = users.find((user) => user.email === user.email);
   const [userStatus] = useStatus();
-
   const {
     register,
     handleSubmit,
@@ -33,21 +30,10 @@ const CashIn = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    // Prevent users from sending money
-    if (currentUser?.userType !== "agent") {
-      Swal.fire({
-        title: "Error!",
-        text: "Only agents can do cash in.",
-        icon: "error",
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
       const confirmResult = await Swal.fire({
         title: "Are you sure?",
-        text: `You are sure send money to ${data.receiverIdentifier}`,
+        text: `You are sending a cash-in request to ${data.receiverIdentifier}`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -56,12 +42,16 @@ const CashIn = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post("http://localhost:3000/cash-in", {
-          senderEmail: user.email,
-          receiverIdentifier: data.receiverIdentifier,
-          amount: data.amount,
-          pin: data.pin,
-        });
+        const response = await axios.post(
+          "http://localhost:3000/cash-in-request",
+          {
+            senderEmail: user.email,
+            receiverIdentifier: data.receiverIdentifier,
+            amount: data.amount,
+            pin: data.pin,
+            image: currentUser.profileImage,
+          }
+        );
 
         Swal.fire({
           title: "Success!",
@@ -71,7 +61,7 @@ const CashIn = () => {
         reset(); // Reset form fields
         refetchUsers(); // Refetch users data
       } else {
-        Swal.fire("Cancelled", "Transaction cancelled.", "info");
+        Swal.fire("Cancelled", "Transaction request cancelled.", "info");
       }
     } catch (error) {
       Swal.fire({
@@ -86,10 +76,7 @@ const CashIn = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h2>Current Balance: {currentUser?.balance}</h2>
-        <Modal></Modal>
-      </div>
+      <h2>Current Balance: {currentUser?.balance}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="flex justify-center gap-6">
           <div className="form-control w-1/2">
@@ -186,7 +173,7 @@ const CashIn = () => {
               }`}
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Money"}
+              {loading ? "Sending..." : "Send Cash In Request"}
             </button>
           ) : (
             <button
@@ -202,4 +189,4 @@ const CashIn = () => {
   );
 };
 
-export default CashIn;
+export default CashInRequest;
