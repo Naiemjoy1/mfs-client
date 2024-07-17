@@ -12,6 +12,9 @@ import History from "../Pages/Dashboard/History/History";
 import UserManagement from "../Pages/Dashboard/UserManagement/UserManagement";
 import CashInRequest from "../Pages/Dashboard/CashInRequest/CashInRequest";
 import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import AgentRoute from "./AgentRoute";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +35,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard></Dashboard>,
+        element: (
+          <PrivateRoute>
+            <Dashboard></Dashboard>
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "profile",
@@ -44,7 +51,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "cashin",
-            element: <CashIn></CashIn>,
+            element: (
+              <AgentRoute>
+                <CashIn></CashIn>
+              </AgentRoute>
+            ),
           },
           {
             path: "cashout",
@@ -56,7 +67,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "management",
-            element: <UserManagement></UserManagement>,
+            element: (
+              <AdminRoute>
+                <UserManagement></UserManagement>
+              </AdminRoute>
+            ),
           },
           {
             path: "cash-in-request",
@@ -64,7 +79,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "cash-out-request",
-            element: <CashOutRequest></CashOutRequest>,
+            element: (
+              <AgentRoute>
+                <CashOutRequest></CashOutRequest>
+              </AgentRoute>
+            ),
           },
         ],
       },
