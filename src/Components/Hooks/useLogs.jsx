@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import useAxiosPublic from "./useAxiosPublic";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useLogs = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axiosPublic
+    axiosSecure
       .get("/history")
       .then((response) => {
         setLogs(response.data);
@@ -17,7 +17,7 @@ const useLogs = () => {
         console.error("Error fetching logs:", error);
         setLoading(false);
       });
-  }, [axiosPublic]);
+  }, [axiosSecure]);
 
   return [logs, loading];
 };

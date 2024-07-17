@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    setLoading(false); // Set loading to false after checking user state
+    setLoading(false);
   }, []);
 
   const login = async (data) => {
