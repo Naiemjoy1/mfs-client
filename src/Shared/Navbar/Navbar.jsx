@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
+import useUsers from "../../Components/Hooks/useUsers";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -13,6 +14,8 @@ const Navbar = () => {
       console.error("Logout error:", error);
     }
   };
+  const { users } = useUsers();
+  const currentUser = users.find((u) => u.email === user.email);
 
   return (
     <div className="bg-red-100">
@@ -95,7 +98,7 @@ const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     src={
-                      user?.profileImage ||
+                      currentUser?.profileImage ||
                       "https://i.ibb.co/cFXnHG0/360-F-214746128-31-Jkea-P6r-U0-Nzzzd-FC4kh-Gkmqc8noe6h.jpg"
                     }
                     alt=""

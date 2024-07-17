@@ -1,10 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
 import useRole from "../../Components/Hooks/useRole";
+import useUsers from "../../Components/Hooks/useUsers";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [userRole] = useRole();
+  const { users } = useUsers();
+  const currentUser = users.find((u) => u.email === user.email);
 
   return (
     <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)]">
@@ -60,14 +63,14 @@ const Dashboard = () => {
               <div className="w-14 rounded-full">
                 <img
                   src={
-                    user?.profileImage ||
+                    currentUser?.profileImage ||
                     "https://i.ibb.co/cFXnHG0/360-F-214746128-31-Jkea-P6r-U0-Nzzzd-FC4kh-Gkmqc8noe6h.jpg"
                   }
                   alt="Profile"
                 />
               </div>
             </div>
-            <p>{user?.name}</p>
+            <p>{currentUser?.name}</p>
           </section>
         </div>
         <div className="w-3/4 bg-white px-10 py-6 rounded-xl">
