@@ -4,8 +4,8 @@ import useAuth from "../../../Components/Hooks/useAuth";
 import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
 import useStatus from "../../../Components/Hooks/useStatus";
-import Modal from "../../../Shared/Modal/Modal";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
+import Modal from "./Modal";
 
 const CashIn = () => {
   const { user } = useAuth();

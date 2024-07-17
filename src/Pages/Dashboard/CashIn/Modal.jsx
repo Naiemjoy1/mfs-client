@@ -1,12 +1,12 @@
-import useLogs from "../../Components/Hooks/useLogs";
-import useAuth from "../../Components/Hooks/useAuth";
-import useAxiosPublic from "../../Components/Hooks/useAxiosPublic";
+import useLogs from "../../../Components/Hooks/useLogs";
+import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const Modal = () => {
-  const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const [logs] = useLogs();
+  const axiosSecure = useAxiosSecure();
 
   const request = logs.filter(
     (log) => log?.receiver === user.email && log?.status === "pending"
@@ -14,7 +14,7 @@ const Modal = () => {
 
   const handleConfirm = async (id) => {
     try {
-      const response = await axiosPublic.patch(`/history/${id}`, {
+      const response = await axiosSecure.patch(`/history/${id}`, {
         status: "confirm",
       });
 
