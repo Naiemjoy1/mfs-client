@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
 import useUsers from "../../../Components/Hooks/useUsers";

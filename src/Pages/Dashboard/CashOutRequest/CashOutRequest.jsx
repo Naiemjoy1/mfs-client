@@ -5,12 +5,14 @@ import Swal from "sweetalert2";
 import useAuth from "../../../Components/Hooks/useAuth";
 import useUsers from "../../../Components/Hooks/useUsers";
 import useStatus from "../../../Components/Hooks/useStatus";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const CashOutRequest = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find((users) => users.email === user.email);
   const [userStatus] = useStatus();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -42,7 +44,7 @@ const CashOutRequest = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post(
+        const response = await axiosSecure.post(
           "http://localhost:3000/cash-out-request",
           {
             senderEmail: user.email,

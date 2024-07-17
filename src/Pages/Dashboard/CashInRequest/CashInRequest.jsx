@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useStatus from "../../../Components/Hooks/useStatus";
 import useUsers from "../../../Components/Hooks/useUsers";
 import useAuth from "../../../Components/Hooks/useAuth";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const CashInRequest = () => {
   const { user } = useAuth();
@@ -12,6 +12,7 @@ const CashInRequest = () => {
   const currentUser = users.find((u) => u.email === user.email);
   // console.log("cash in request", currentUser);
   const [userStatus] = useStatus();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -43,7 +44,7 @@ const CashInRequest = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post(
+        const response = await axiosSecure.post(
           "http://localhost:3000/cash-in-request",
           {
             senderEmail: user.email,
