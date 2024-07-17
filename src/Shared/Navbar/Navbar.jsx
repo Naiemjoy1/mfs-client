@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  const handlelogOut = () => {
-    logOut()
-      .then(() => {})
-      .catch((error) => console.log(error));
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/"); // Redirect to home page after successful logout
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
+
   return (
     <div className="bg-red-100">
       <div className="navbar container mx-auto">
@@ -104,7 +110,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    onClick={handlelogOut}
+                    onClick={handleLogout}
                     className="btn btn-sm btn-ghost"
                   >
                     logOut
