@@ -5,10 +5,12 @@ import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
 import useUsers from "../../../Components/Hooks/useUsers";
 import useStatus from "../../../Components/Hooks/useStatus";
+import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 
 const SendMoney = () => {
   const { user } = useAuth();
   const [userStatus] = useStatus();
+  const axiosSecure = useAxiosSecure();
   const { users, refetchUsers } = useUsers();
   const currentUser = users.find(
     (users) => users.email === user.email && users.userType === "user"
@@ -61,12 +63,15 @@ const SendMoney = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post("http://localhost:3000/send-money", {
-          senderEmail: user.email,
-          receiverIdentifier: data.receiverIdentifier,
-          amount: data.amount,
-          pin: data.pin,
-        });
+        const response = await axiosSecure.post(
+          "http://localhost:3000/send-money",
+          {
+            senderEmail: user.email,
+            receiverIdentifier: data.receiverIdentifier,
+            amount: data.amount,
+            pin: data.pin,
+          }
+        );
 
         Swal.fire({
           title: "Success!",
