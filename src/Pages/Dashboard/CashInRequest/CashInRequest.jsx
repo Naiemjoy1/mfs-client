@@ -9,7 +9,8 @@ import useAuth from "../../../Components/Hooks/useAuth";
 const CashInRequest = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((user) => user.email === user.email);
+  const currentUser = users.find((u) => u.email === user.email);
+  // console.log("cash in request", currentUser);
   const [userStatus] = useStatus();
   const {
     register,

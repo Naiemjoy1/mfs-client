@@ -5,6 +5,7 @@ import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
 import axios from "axios";
 import useStatus from "../../../Components/Hooks/useStatus";
+import Modal from "../CashOutRequest/Modal";
 
 const CashOut = () => {
   const { user } = useAuth();
@@ -101,7 +102,10 @@ const CashOut = () => {
 
   return (
     <div>
-      <h2>Current Balance: {currentUser?.balance}</h2>
+      <div className="flex justify-between items-center">
+        <h2>Current Balance: {currentUser?.balance}</h2>
+        <Modal></Modal>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="flex justify-center gap-6">
           <div className="form-control w-1/2">

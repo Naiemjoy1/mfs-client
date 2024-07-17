@@ -30,21 +30,10 @@ const CashOutRequest = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    // Prevent users from sending money
-    if (currentUser?.userType !== "agent") {
-      Swal.fire({
-        title: "Error!",
-        text: "Only agents can do cash in.",
-        icon: "error",
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
       const confirmResult = await Swal.fire({
         title: "Are you sure?",
-        text: `You are sure send money to ${data.receiverIdentifier}`,
+        text: `You are sending a cash-out request to ${data.receiverIdentifier}`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -53,12 +42,16 @@ const CashOutRequest = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axios.post("http://localhost:3000/cash-in", {
-          senderEmail: user.email,
-          receiverIdentifier: data.receiverIdentifier,
-          amount: data.amount,
-          pin: data.pin,
-        });
+        const response = await axios.post(
+          "http://localhost:3000/cash-out-request",
+          {
+            senderEmail: user.email,
+            receiverIdentifier: data.receiverIdentifier,
+            amount: data.amount,
+            pin: data.pin,
+            image: currentUser.profileImage,
+          }
+        );
 
         Swal.fire({
           title: "Success!",
@@ -68,7 +61,7 @@ const CashOutRequest = () => {
         reset(); // Reset form fields
         refetchUsers(); // Refetch users data
       } else {
-        Swal.fire("Cancelled", "Transaction cancelled.", "info");
+        Swal.fire("Cancelled", "Transaction request cancelled.", "info");
       }
     } catch (error) {
       Swal.fire({

@@ -29,9 +29,11 @@ const Dashboard = () => {
                   <li>Cash In</li>
                 </NavLink>
               )}
-              <NavLink to="/dashboard/cash-out-request">
-                <li>Cash Out Request</li>
-              </NavLink>
+              {userRole === "agent" && (
+                <NavLink to="/dashboard/cash-out-request">
+                  <li>Cash Out Request</li>
+                </NavLink>
+              )}
               {userRole === "user" && (
                 <NavLink to="/dashboard/sendmoney">
                   <li>Send Money</li>
@@ -42,9 +44,11 @@ const Dashboard = () => {
                   <li>Cash Out</li>
                 </NavLink>
               )}
-              <NavLink to="/dashboard/cash-in-request">
-                <li>Cash In Request</li>
-              </NavLink>
+              {userRole === "user" && (
+                <NavLink to="/dashboard/cash-in-request">
+                  <li>Cash In Request</li>
+                </NavLink>
+              )}
               <NavLink to="/dashboard/history">
                 <li>History</li>
               </NavLink>
