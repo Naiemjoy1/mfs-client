@@ -78,6 +78,9 @@ const CashInRequest = () => {
 
   return (
     <div>
+      <p className="text-center text-2xl font-bold text-primary uppercase">
+        Cash In Request
+      </p>
       <h2>Current Balance: {currentUser?.balance}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="lg:flex justify-center space-y-4 gap-6 lg:space-y-0 items-center">

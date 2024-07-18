@@ -86,6 +86,9 @@ const CashIn = () => {
 
   return (
     <div>
+      <p className="text-center text-2xl font-bold text-primary uppercase">
+        cash in
+      </p>
       <div className="lg:flex justify-between items-center">
         <h2>Current Balance: {currentUser?.balance}</h2>
         <Modal></Modal>

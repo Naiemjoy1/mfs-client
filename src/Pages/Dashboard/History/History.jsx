@@ -27,6 +27,9 @@ const History = () => {
 
   return (
     <div className="relative">
+      <p className="text-center text-2xl font-bold text-primary uppercase">
+        History
+      </p>
       {loading ? (
         <div className="flex justify-center items-center h-full">
           <span className="loading loading-ring loading-lg text-primary"></span>
