@@ -15,6 +15,7 @@ import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import AgentRoute from "./AgentRoute";
+import DashboardStat from "../Pages/Dashboard/DashboardStat/DashboardStat";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
         element: <Registration></Registration>,
       },
       {
-        path: "/dashboard",
+        path: "",
         element: (
           <PrivateRoute>
             <Dashboard></Dashboard>
@@ -42,15 +43,19 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: "profile",
+            path: "/dashboard",
+            element: <DashboardStat></DashboardStat>,
+          },
+          {
+            path: "/dashboard/profile",
             element: <Profile></Profile>,
           },
           {
-            path: "sendmoney",
+            path: "/dashboard/sendmoney",
             element: <SendMoney></SendMoney>,
           },
           {
-            path: "cashin",
+            path: "/dashboard/cashin",
             element: (
               <AgentRoute>
                 <CashIn></CashIn>
@@ -58,15 +63,15 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: "cashout",
+            path: "/dashboard/cashout",
             element: <CashOut></CashOut>,
           },
           {
-            path: "history",
+            path: "/dashboard/history",
             element: <History></History>,
           },
           {
-            path: "management",
+            path: "/dashboard/management",
             element: (
               <AdminRoute>
                 <UserManagement></UserManagement>
@@ -74,11 +79,11 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: "cash-in-request",
+            path: "/dashboard/cash-in-request",
             element: <CashInRequest></CashInRequest>,
           },
           {
-            path: "cash-out-request",
+            path: "/dashboard/cash-out-request",
             element: (
               <AgentRoute>
                 <CashOutRequest></CashOutRequest>
