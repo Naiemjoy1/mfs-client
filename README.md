@@ -28,7 +28,6 @@ This is the client-side application for a basic Mobile Financial Service (MFS) l
 
    ```bash
    https://github.com/Naiemjoy1/mfs-client
-   cd mfs-client
    ```
 
    cd
