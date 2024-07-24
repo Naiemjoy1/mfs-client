@@ -19,11 +19,9 @@ const Dashboard = () => {
           </section>
           <section>
             <ul className="menu text-lg gap-4">
-              {userRole === "admin" && (
-                <NavLink to="/dashboard">
-                  <li>Dashboard</li>
-                </NavLink>
-              )}
+              <NavLink to="/dashboard">
+                <li>Dashboard</li>
+              </NavLink>
               <NavLink to="/dashboard/profile">
                 <li>Profile</li>
               </NavLink>
