@@ -63,7 +63,7 @@ const SendMoney = () => {
 
       if (confirmResult.isConfirmed) {
         const response = await axiosSecure.post(
-          "http://localhost:3000/send-money",
+          "https://mobile-financial-service-8e757.vercel.app/send-money",
           {
             senderEmail: user.email,
             receiverIdentifier: data.receiverIdentifier,

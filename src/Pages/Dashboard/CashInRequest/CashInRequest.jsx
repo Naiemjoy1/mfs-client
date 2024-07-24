@@ -45,7 +45,7 @@ const CashInRequest = () => {
 
       if (confirmResult.isConfirmed) {
         const response = await axiosSecure.post(
-          "http://localhost:3000/cash-in-request",
+          "https://mobile-financial-service-8e757.vercel.app/cash-in-request",
           {
             senderEmail: user.email,
             receiverIdentifier: data.receiverIdentifier,

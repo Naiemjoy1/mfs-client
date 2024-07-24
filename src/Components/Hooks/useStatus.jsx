@@ -10,7 +10,9 @@ const useStatus = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:3000/user/${user.email}`)
+        .get(
+          `https://mobile-financial-service-8e757.vercel.app/user/${user.email}`
+        )
         .then((response) => {
           setUserStatus(response.data.status);
           setLoading(false);
