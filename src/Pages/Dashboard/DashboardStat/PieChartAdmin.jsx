@@ -1,14 +1,7 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { PieChart, Pie, Cell } from "recharts";
 
-const data = [
-  { name: "Cash In", value: 2618 },
-  { name: "Cash Out", value: 804 },
-  { name: "Send Money", value: 387 },
-];
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
-
 const RADIAN = Math.PI / 180;
 
 const renderCustomizedLabel = ({
@@ -18,7 +11,6 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -64,6 +56,15 @@ const PieChartAdmin = ({ transfers }) => {
       </PieChart>
     </div>
   );
+};
+
+// Prop validation using PropTypes
+PieChartAdmin.propTypes = {
+  transfers: PropTypes.shape({
+    cashIn: PropTypes.number.isRequired,
+    cashOut: PropTypes.number.isRequired,
+    sendMoney: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default PieChartAdmin;

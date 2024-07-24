@@ -1,13 +1,7 @@
+import PropTypes from "prop-types";
 import { PieChart, Pie, Cell } from "recharts";
 
-const data = [
-  { name: "Cash In", value: 2618 },
-  { name: "Cash Out", value: 804 },
-  { name: "Send Money", value: 387 },
-];
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
-
 const RADIAN = Math.PI / 180;
 
 const renderCustomizedLabel = ({
@@ -35,11 +29,11 @@ const renderCustomizedLabel = ({
   );
 };
 
-const userPie = ({ userTransfers }) => {
+const PieForUserAgent = ({ transfers }) => {
   const data = [
-    { name: "Cash In", value: userTransfers.totalCashIn },
-    { name: "Cash Out", value: userTransfers.totalCashOut },
-    { name: "Send Money", value: userTransfers.totalSendMoney },
+    { name: "Cash In", value: transfers.cashIn },
+    { name: "Cash Out", value: transfers.cashOut },
+    { name: "Send Money", value: transfers.sendMoney },
   ];
 
   return (
@@ -64,4 +58,13 @@ const userPie = ({ userTransfers }) => {
   );
 };
 
-export default userPie;
+// Prop validation using PropTypes
+PieForUserAgent.propTypes = {
+  transfers: PropTypes.shape({
+    cashIn: PropTypes.number.isRequired,
+    cashOut: PropTypes.number.isRequired,
+    sendMoney: PropTypes.number.isRequired,
+  }).isRequired,
+};
+
+export default PieForUserAgent;
