@@ -15,6 +15,22 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
     }
     setLoading(false);
+
+    const handleStorageChange = () => {
+      const newToken = localStorage.getItem("token");
+      const newUser = localStorage.getItem("user");
+      if (!newToken || !newUser) {
+        setUser(null);
+      } else {
+        setUser(JSON.parse(newUser));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const login = async (data) => {
