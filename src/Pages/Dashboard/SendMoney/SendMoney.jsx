@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
-import useUsers from "../../../Components/Hooks/useUsers";
-import useStatus from "../../../Components/Hooks/useStatus";
+import useAuth from "../../../Components/Hooks/useAuth";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
+import useStatus from "../../../Components/Hooks/useStatus";
+import useUsers from "../../../Components/Hooks/useUsers";
 
 const SendMoney = () => {
   const { user } = useAuth();
@@ -25,17 +25,25 @@ const SendMoney = () => {
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
+
     if (!/^\d{10}$/.test(value) && !/\S+@\S+\.\S+/.test(value)) {
       return "Invalid input. Please enter a 10-digit number or valid email";
     }
+
+    if (value === user.email || value === user.mobile) {
+      return "You cannot send money to yourself";
+    }
+
     const receiver = users.find(
       (user) =>
         (user.email === value || user.mobile === value) &&
         user.userType === "user"
     );
+
     if (!receiver) {
       return "Receiver must be a user";
     }
+
     return true;
   };
 
@@ -63,7 +71,7 @@ const SendMoney = () => {
 
       if (confirmResult.isConfirmed) {
         const response = await axiosSecure.post(
-          "https://mobile-financial-service-8e757.vercel.app/send-money",
+          "http://localhost:3000/send-money",
           {
             senderEmail: user.email,
             receiverIdentifier: data.receiverIdentifier,

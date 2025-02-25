@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
-import axios from "axios";
 
 const useStatus = () => {
   const { user } = useAuth();
@@ -10,9 +10,7 @@ const useStatus = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(
-          `https://mobile-financial-service-8e757.vercel.app/user/${user.email}`
-        )
+        .get(`http://localhost:3000/user/${user.email}`)
         .then((response) => {
           setUserStatus(response.data.status);
           setLoading(false);

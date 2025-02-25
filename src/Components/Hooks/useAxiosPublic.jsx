@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosPublic = axios.create({
-  baseURL: "https://mobile-financial-service-8e757.vercel.app/",
+  baseURL: "http://localhost:3000/",
 });
 const useAxiosPublic = () => {
   return axiosPublic;
