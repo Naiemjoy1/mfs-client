@@ -14,14 +14,17 @@ const SendMoney = () => {
   const currentUser = users.find(
     (users) => users.email === user.email && users.userType === "user"
   );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+
   const [loading, setLoading] = useState(false);
   const [fee, setFee] = useState(0);
+  const [showBalance, setShowBalance] = useState(false);
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
@@ -85,8 +88,8 @@ const SendMoney = () => {
           text: response.data.message,
           icon: "success",
         });
-        reset(); // Reset form fields
-        refetchUsers(); // Refetch users data
+        reset();
+        refetchUsers();
       } else {
         Swal.fire("Cancelled", "Transaction cancelled.", "info");
       }
@@ -106,7 +109,19 @@ const SendMoney = () => {
       <p className="text-center text-2xl font-bold text-primary uppercase">
         Send Money
       </p>
-      <h2>Current Balance: {currentUser?.balance}</h2>
+
+      <div className="flex items-center justify-center mt-4">
+        <p
+          className="text-lg font-semibold cursor-pointer"
+          onClick={() => setShowBalance(!showBalance)}
+        >
+          Current Balance:{" "}
+          <span className={`${showBalance ? "text-black" : "blur-sm"}`}>
+            {showBalance ? currentUser?.balance : "******"}
+          </span>
+        </p>
+      </div>
+
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="lg:flex justify-center gap-6 space-y-4 lg:space-y-0 items-center">
           <div className="form-control lg:w-1/2">

@@ -13,6 +13,11 @@ const CashOut = () => {
   const currentUser = users.find((u) => u.email === user.email);
   const [userStatus] = useStatus();
   const axiosSecure = useAxiosSecure();
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+
+  const toggleBalanceVisibility = () => {
+    setIsBalanceVisible(!isBalanceVisible);
+  };
 
   const {
     register,
@@ -108,7 +113,17 @@ const CashOut = () => {
         Cash Out
       </p>
       <div className="lg:flex justify-between items-center">
-        <h2>Current Balance: {currentUser?.balance}</h2>
+        <h2
+          onClick={toggleBalanceVisibility}
+          className="cursor-pointer text-lg font-bold"
+        >
+          Current Balance:
+          <span
+            className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}
+          >
+            {isBalanceVisible ? currentUser?.balance : "******"}
+          </span>
+        </h2>
         <Modal></Modal>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">

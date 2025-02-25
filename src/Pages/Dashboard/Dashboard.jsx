@@ -1,18 +1,33 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../../Components/Hooks/useAuth";
 import useRole from "../../Components/Hooks/useRole";
 import useUsers from "../../Components/Hooks/useUsers";
+import element from "../../assets/Images/element/element.png";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const [userRole] = useRole();
   const { users } = useUsers();
-  const currentUser = users.find((u) => u.email === user.email);
+  const navigate = useNavigate();
+
+  const currentUser = user ? users.find((u) => u.email === user.email) : null;
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
-    <div className="bg-[#b5c2ca] min-h-[calc(100vh-246px)] px-5 lg:px-0">
+    <div
+      className="min-h-screen bg-cover bg-center flex justify-center items-center"
+      style={{ backgroundImage: `url(${element})` }}
+    >
       <div className="container mx-auto py-12 lg:flex space-y-4 lg:space-y-0 gap-4">
-        <div className="lg:w-1/4 bg-[#eff3f4] px-10 py-6 rounded-xl flex flex-col justify-between gap-5">
+        <div className="lg:w-1/4 bg-[#eff3f4] px-10 py-6 rounded-xl shadow-2xl flex flex-col justify-between gap-5">
           <section>
             <p className="text-center uppercase font-bold">MFS Dashboard</p>
             <div className="divider"></div>
@@ -74,9 +89,12 @@ const Dashboard = () => {
               </div>
             </div>
             <p>{currentUser?.name}</p>
+            <button onClick={handleLogout} className="btn btn-xs btn-error">
+              Log Out
+            </button>
           </section>
         </div>
-        <div className="lg:w-3/4 bg-white px-10 py-6 rounded-xl">
+        <div className="lg:w-3/4 bg-[#eff3f4] px-10 py-6 rounded-xl shadow-xl">
           <Outlet></Outlet>
         </div>
       </div>
