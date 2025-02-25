@@ -1,25 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layouts/Main";
-import Login from "../Pages/Login/Login";
-import Registration from "../Pages/Registration/Registration";
+import CashIn from "../Pages/Dashboard/CashIn/CashIn";
+import CashInRequest from "../Pages/Dashboard/CashInRequest/CashInRequest";
+import CashOut from "../Pages/Dashboard/CashOut/CashOut";
+import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardStat from "../Pages/Dashboard/DashboardStat/DashboardStat";
+import History from "../Pages/Dashboard/History/History";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import SendMoney from "../Pages/Dashboard/SendMoney/SendMoney";
-import CashIn from "../Pages/Dashboard/CashIn/CashIn";
-import CashOut from "../Pages/Dashboard/CashOut/CashOut";
-import History from "../Pages/Dashboard/History/History";
 import UserManagement from "../Pages/Dashboard/UserManagement/UserManagement";
-import CashInRequest from "../Pages/Dashboard/CashInRequest/CashInRequest";
-import CashOutRequest from "../Pages/Dashboard/CashOutRequest/CashOutRequest";
-import PrivateRoute from "./PrivateRoute";
+import Login from "../Pages/Login/Login";
+import Registration from "../Pages/Registration/Registration";
+import Error from "../Shared/Error/Error";
 import AdminRoute from "./AdminRoute";
 import AgentRoute from "./AgentRoute";
-import DashboardStat from "../Pages/Dashboard/DashboardStat/DashboardStat";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <Error></Error>,
     children: [
       {
         path: "/",
