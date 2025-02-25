@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Components/Hooks/useAuth";
-import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
-import useStatus from "../../../Components/Hooks/useStatus";
-import Modal from "../CashOutRequest/Modal";
+import useAuth from "../../../Components/Hooks/useAuth";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
+import useStatus from "../../../Components/Hooks/useStatus";
+import useUsers from "../../../Components/Hooks/useUsers";
+import Modal from "../CashOutRequest/Modal";
 
 const CashOut = () => {
   const { user } = useAuth();
@@ -21,7 +21,7 @@ const CashOut = () => {
     reset,
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const [feeAmount, setFeeAmount] = useState(0); // State to store fee amount
+  const [feeAmount, setFeeAmount] = useState(0);
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
@@ -95,10 +95,10 @@ const CashOut = () => {
   const handleAmountChange = (e) => {
     const numericAmount = parseFloat(e.target.value);
     if (!isNaN(numericAmount) && numericAmount > 0) {
-      const fee = numericAmount * 0.015; // Calculate fee
-      setFeeAmount(fee); // Update fee amount state
+      const fee = numericAmount * 0.015;
+      setFeeAmount(fee);
     } else {
-      setFeeAmount(0); // Reset fee amount if amount is invalid
+      setFeeAmount(0);
     }
   };
 
