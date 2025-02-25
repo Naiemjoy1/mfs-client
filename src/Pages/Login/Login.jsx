@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "../../Components/Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import element from "../../assets/Images/element/element.png";
+import logo from "../../assets/Images/logo/logo.png";
+import useAxiosPublic from "../../Components/Hooks/useAxiosPublic";
 
 const LoginForm = () => {
   const {
@@ -10,14 +13,45 @@ const LoginForm = () => {
   } = useForm();
   const axiosPublic = useAxiosPublic();
 
+  const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [progress, setProgress] = useState(1);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setLoading(false);
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const onSubmit = async (data) => {
+    setIsSubmitting(true); // Show loading animation on submit
+    setProgress(1);
+
+    let interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, 30);
+
     try {
       const response = await axiosPublic.post("/login", data);
       const { token, user } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      console.log("Response:", response.data);
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -28,77 +62,103 @@ const LoginForm = () => {
         window.location.href = "/dashboard";
       });
     } catch (error) {
-      console.error("Login failed", error.response.data);
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: error.response.data.message || "An error occurred",
+        text: error.response?.data?.message || "An error occurred",
       });
+      setIsSubmitting(false); // Hide loading animation on error
     }
   };
 
   return (
-    <div className="lg:w-1/3 mx-auto min-h-[calc(100vh-246px)]">
-      <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Email or Mobile</span>
-          </label>
-          <input
-            type="text"
-            name="email"
-            placeholder="email or mobile"
-            className="input input-bordered"
-            {...register("email", { required: true })}
-          />
-          {errors.email && <span>This field is required</span>}
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">PIN (5 digits)</span>
-          </label>
-          <input
-            type="text"
-            name="pin"
-            placeholder="PIN"
-            className="input input-bordered"
-            {...register("pin", {
-              required: true,
-              minLength: 5,
-              maxLength: 5,
-              pattern: /^[0-9]*$/,
-            })}
-            onInput={(e) => {
-              e.target.value = e.target.value.replace(/[^0-9]/g, "");
-            }}
-          />
-          {errors.pin && errors.pin.type === "required" && (
-            <span>This field is required</span>
-          )}
-          {errors.pin && errors.pin.type === "minLength" && (
-            <span>PIN must be exactly 5 digits long</span>
-          )}
-          {errors.pin && errors.pin.type === "maxLength" && (
-            <span>PIN must be exactly 5 digits long</span>
-          )}
-          {errors.pin && errors.pin.type === "pattern" && (
-            <span>PIN must contain only digits (0-9)</span>
-          )}
-        </div>
-        <div className="form-control mt-6">
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
-        </div>
-        <p>
-          New Here?{" "}
-          <span>
-            <a className="text-primary" href="/registration">
-              Registration{" "}
-            </a>
-          </span>
-        </p>
-      </form>
+    <div
+      className="min-h-screen bg-cover bg-center flex justify-center items-center"
+      style={{ backgroundImage: `url(${element})` }}
+    >
+      <div className="h-screen lg:w-1/3 mx-auto min-h-[calc(100vh-246px)] flex justify-center items-center">
+        {loading || isSubmitting ? (
+          <div className="flex flex-col items-center justify-center">
+            <div className="relative bg-black rounded-full">
+              <div
+                className="radial-progress text-primary"
+                style={{
+                  "--value": progress,
+                  "--size": "150px",
+                  "--thickness": "10px",
+                }}
+              ></div>
+              <img
+                src={logo}
+                alt="Logo"
+                className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12"
+              />
+            </div>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="card-body bg-white bg-opacity-80 p-6 rounded-lg shadow-lg"
+          >
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email or Mobile</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Email or mobile"
+                className="input input-bordered"
+                {...register("email", { required: true })}
+              />
+              {errors.email && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">PIN (5 digits)</span>
+              </label>
+              <input
+                type="text"
+                placeholder="PIN"
+                className="input input-bordered"
+                {...register("pin", {
+                  required: true,
+                  minLength: 5,
+                  maxLength: 5,
+                  pattern: /^[0-9]*$/,
+                })}
+                onInput={(e) =>
+                  (e.target.value = e.target.value.replace(/[^0-9]/g, ""))
+                }
+              />
+              {errors.pin && (
+                <span className="text-red-500">
+                  PIN must be exactly 5 digits long
+                </span>
+              )}
+            </div>
+
+            <div className="form-control mt-6">
+              <button
+                type="submit"
+                className="btn btn-primary w-full text-white"
+                disabled={isSubmitting}
+              >
+                Login
+              </button>
+            </div>
+
+            <p className="text-center mt-4">
+              New Here?{" "}
+              <a className="text-primary" href="/registration">
+                Register
+              </a>
+            </p>
+          </form>
+        )}
+      </div>
     </div>
   );
 };
