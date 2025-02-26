@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import useAuth from "../../../Components/Hooks/useAuth";
-import useUsers from "../../../Components/Hooks/useUsers";
 import Swal from "sweetalert2";
-import useStatus from "../../../Components/Hooks/useStatus";
+import useAuth from "../../../Components/Hooks/useAuth";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
+import useStatus from "../../../Components/Hooks/useStatus";
+import useUsers from "../../../Components/Hooks/useUsers";
 import Modal from "./Modal";
 
 const CashIn = () => {
@@ -13,6 +13,11 @@ const CashIn = () => {
   const currentUser = users.find((u) => u.email === user.email);
   const [userStatus] = useStatus();
   const axiosSecure = useAxiosSecure();
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+
+  const toggleBalanceVisibility = () => {
+    setIsBalanceVisible(!isBalanceVisible);
+  };
 
   const {
     register,
@@ -90,7 +95,17 @@ const CashIn = () => {
         cash in
       </p>
       <div className="lg:flex justify-between items-center">
-        <h2>Current Balance: {currentUser?.balance}</h2>
+        <p
+          onClick={toggleBalanceVisibility}
+          className="cursor-pointer text-lg font-bold"
+        >
+          Current Balance:
+          <span
+            className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}
+          >
+            {isBalanceVisible ? currentUser?.balance : "******"}
+          </span>
+        </p>
         <Modal></Modal>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">

@@ -31,10 +31,7 @@ const Profile = () => {
           <p className="text-xl font-bold">{currentUser?.name}</p>
           <p>Mobile: {currentUser?.mobile}</p>
           <p>Email: {currentUser?.email}</p>
-          <p
-            onClick={toggleBalanceVisibility}
-            className="cursor-pointer font-bold text-lg"
-          >
+          <p onClick={toggleBalanceVisibility} className="cursor-pointer">
             Balance:
             <span
               className={`ml-2 ${isBalanceVisible ? "text-white" : "blur-sm"}`}

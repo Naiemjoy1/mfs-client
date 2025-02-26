@@ -33,7 +33,7 @@ const LoginForm = () => {
   }, []);
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true); // Show loading animation on submit
+    setIsSubmitting(true);
     setProgress(1);
 
     let interval = setInterval(() => {
@@ -59,7 +59,7 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/profile";
       });
     } catch (error) {
       Swal.fire({

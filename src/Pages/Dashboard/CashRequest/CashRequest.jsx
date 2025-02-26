@@ -5,12 +5,11 @@ import useAuth from "../../../Components/Hooks/useAuth";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
 import useStatus from "../../../Components/Hooks/useStatus";
 import useUsers from "../../../Components/Hooks/useUsers";
-import Modal from "../CashOutRequest/Modal";
 
-const CashOut = () => {
+const CashRequest = () => {
   const { user } = useAuth();
   const { users, refetchUsers } = useUsers();
-  const currentUser = users.find((u) => u.email === user.email);
+  const currentUser = users.find((users) => users.email === user.email);
   const [userStatus] = useStatus();
   const axiosSecure = useAxiosSecure();
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
@@ -26,7 +25,6 @@ const CashOut = () => {
     reset,
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const [feeAmount, setFeeAmount] = useState(0);
 
   const validateReceiver = (value) => {
     if (!value) return "This field is required";
@@ -39,26 +37,10 @@ const CashOut = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    if (currentUser?.userType !== "user") {
-      Swal.fire({
-        title: "Error!",
-        text: "Only users can cash out.",
-        icon: "error",
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
       const confirmResult = await Swal.fire({
         title: "Are you sure?",
-        html: `You are sending <b>${
-          data.amount
-        }</b> with a fee of <b>${feeAmount.toFixed(
-          2
-        )}</b>.<br>Confirm this transaction to <b>${
-          data.receiverIdentifier
-        }</b>?`,
+        text: `You are sending a cash-out request to ${data.receiverIdentifier}`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -67,24 +49,26 @@ const CashOut = () => {
       });
 
       if (confirmResult.isConfirmed) {
-        const response = await axiosSecure.post("/cash-out", {
-          senderEmail: user.email,
-          receiverIdentifier: data.receiverIdentifier,
-          amount: data.amount,
-          pin: data.pin,
-        });
+        const response = await axiosSecure.post(
+          "http://localhost:3000/cash-request",
+          {
+            senderEmail: user.email,
+            receiverIdentifier: data.receiverIdentifier,
+            amount: data.amount,
+            pin: data.pin,
+            image: currentUser.profileImage,
+          }
+        );
 
         Swal.fire({
           title: "Success!",
-          text: `${
-            response.data.message
-          }. Fee deducted: ${response.data.fee.toFixed(2)}`,
+          text: response.data.message,
           icon: "success",
         });
         reset();
         refetchUsers();
       } else {
-        Swal.fire("Cancelled", "Transaction cancelled.", "info");
+        Swal.fire("Cancelled", "Transaction request cancelled.", "info");
       }
     } catch (error) {
       Swal.fire({
@@ -97,35 +81,17 @@ const CashOut = () => {
     }
   };
 
-  const handleAmountChange = (e) => {
-    const numericAmount = parseFloat(e.target.value);
-    if (!isNaN(numericAmount) && numericAmount > 0) {
-      const fee = numericAmount * 0.015;
-      setFeeAmount(fee);
-    } else {
-      setFeeAmount(0);
-    }
-  };
-
   return (
     <div>
       <p className="text-center text-2xl font-bold text-primary uppercase">
-        Cash Out
+        cash request
       </p>
-      <div className="lg:flex justify-between items-center">
-        <p
-          onClick={toggleBalanceVisibility}
-          className="cursor-pointer text-lg font-bold"
-        >
-          Current Balance:
-          <span
-            className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}
-          >
-            {isBalanceVisible ? currentUser?.balance : "******"}
-          </span>
-        </p>
-        <Modal></Modal>
-      </div>
+      <p onClick={toggleBalanceVisibility} className="cursor-pointer">
+        Current Balance:
+        <span className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}>
+          {isBalanceVisible ? currentUser?.balance : "******"}
+        </span>
+      </p>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="lg:flex justify-center gap-6 space-y-4 lg:space-y-0 items-center">
           <div className="form-control lg:w-1/2">
@@ -173,7 +139,6 @@ const CashOut = () => {
               placeholder="Amount"
               className="input input-bordered"
               {...register("amount", { required: true, min: 50 })}
-              onChange={handleAmountChange}
             />
             {errors.amount && (
               <span className="text-red-500">
@@ -223,7 +188,7 @@ const CashOut = () => {
               }`}
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Money"}
+              {loading ? "Sending..." : "Send Cash Out Request"}
             </button>
           ) : (
             <button
@@ -239,4 +204,4 @@ const CashOut = () => {
   );
 };
 
-export default CashOut;
+export default CashRequest;

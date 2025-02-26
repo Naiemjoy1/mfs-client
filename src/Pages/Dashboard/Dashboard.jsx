@@ -34,9 +34,9 @@ const Dashboard = () => {
           </section>
           <section>
             <ul className="menu text-lg gap-4">
-              <NavLink to="/dashboard">
+              {/* <NavLink to="/dashboard">
                 <li>Dashboard</li>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/dashboard/profile">
                 <li>Profile</li>
               </NavLink>
@@ -45,9 +45,24 @@ const Dashboard = () => {
                   <li>Users</li>
                 </NavLink>
               )}
+              {userRole === "admin" && (
+                <NavLink to="/dashboard/requests">
+                  <li>Requests</li>
+                </NavLink>
+              )}
               {userRole === "agent" && (
                 <NavLink to="/dashboard/cashin">
                   <li>Cash In</li>
+                </NavLink>
+              )}
+              {userRole === "agent" && (
+                <NavLink to="/dashboard/cash-request">
+                  <li>Cash Request</li>
+                </NavLink>
+              )}
+              {userRole === "agent" && (
+                <NavLink to="/dashboard/cash-Withdraw">
+                  <li>Cash Withdraw</li>
                 </NavLink>
               )}
               {userRole === "agent" && (

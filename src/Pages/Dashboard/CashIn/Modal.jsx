@@ -1,7 +1,7 @@
-import useLogs from "../../../Components/Hooks/useLogs";
-import useAuth from "../../../Components/Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAuth from "../../../Components/Hooks/useAuth";
 import useAxiosSecure from "../../../Components/Hooks/useAxiosSecure";
+import useLogs from "../../../Components/Hooks/useLogs";
 
 const Modal = () => {
   const { user } = useAuth();
@@ -12,17 +12,18 @@ const Modal = () => {
     (log) => log?.receiver === user.email && log?.status === "pending"
   );
 
-  const handleConfirm = async (id) => {
+  const handleConfirm = async (id, type) => {
     try {
       const response = await axiosSecure.patch(`/history/${id}`, {
         status: "confirm",
+        type,
       });
 
       if (response.status === 200) {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Money Sent",
+          title: "Request Confirmed",
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
@@ -49,11 +50,12 @@ const Modal = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>#</th>
                   <th>Sender</th>
                   <th>Amount</th>
+                  <th>Type</th>
                   <th>Status</th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,12 +64,13 @@ const Modal = () => {
                     <th>{index + 1}</th>
                     <td>{log.sender}</td>
                     <td>{log.amount}</td>
+                    <td>{log.type}</td>
                     <td>{log.status}</td>
                     <td>
                       {log.status === "pending" && (
                         <button
                           className="btn btn-primary btn-sm"
-                          onClick={() => handleConfirm(log._id)}
+                          onClick={() => handleConfirm(log._id, log.type)}
                         >
                           Confirm
                         </button>
