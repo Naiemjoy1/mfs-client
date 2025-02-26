@@ -79,7 +79,7 @@ const Requests = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <h2 className="text-xl font-bold mb-4">Requests</h2>
       <div className="overflow-x-auto">
         <table className="table">

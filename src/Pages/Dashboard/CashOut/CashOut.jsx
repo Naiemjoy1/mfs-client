@@ -108,15 +108,12 @@ const CashOut = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         Cash Out
       </p>
       <div className="lg:flex justify-between items-center">
-        <p
-          onClick={toggleBalanceVisibility}
-          className="cursor-pointer text-lg font-bold"
-        >
+        <p onClick={toggleBalanceVisibility} className="cursor-pointer ">
           Current Balance:
           <span
             className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}
@@ -223,7 +220,7 @@ const CashOut = () => {
               }`}
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Money"}
+              {loading ? "Sending..." : "Cash Out"}
             </button>
           ) : (
             <button

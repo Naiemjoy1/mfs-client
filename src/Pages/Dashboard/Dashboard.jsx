@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   return (
     <div
-      className=" min-h-screen bg-cover bg-center flex justify-center items-center relative"
+      className="min-h-screen bg-cover bg-center flex justify-center items-center relative"
       style={{ backgroundImage: `url(${element})` }}
     >
       <div className="absolute inset-x-0 top-5 container mx-auto flex justify-center items-center gap-5 bg-[#eff3f4] py-5 rounded-lg shadow-md">
@@ -128,7 +128,7 @@ const Dashboard = () => {
             </button>
           </section>
         </div>
-        <div className="lg:w-3/4 bg-[#eff3f4] px-10 py-6 rounded-xl shadow-xl">
+        <div className="lg:w-3/4 bg-[#eff3f4]  rounded-xl shadow-xl">
           <Outlet></Outlet>
         </div>
       </div>

@@ -24,8 +24,8 @@ const Profile = () => {
   const totalIncome = userIncome ? userIncome.totalAmount : 0;
 
   return (
-    <div className="flex justify-center items-center h-full">
-      <div className="max-w-md w-full bg-primary text-white p-8 rounded-lg shadow-lg">
+    <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-full bg-primary text-white p-8 rounded-lg shadow-lg flex flex-col justify-center items-center">
         <div className="flex justify-center">
           <div className={`avatar ${isOnline ? "online" : "offline"}`}>
             <div className="w-24 rounded-full ring-4 ring-white">

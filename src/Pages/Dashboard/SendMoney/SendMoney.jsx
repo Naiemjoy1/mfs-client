@@ -105,14 +105,14 @@ const SendMoney = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         Send Money
       </p>
 
-      <div className="flex items-center justify-center mt-4">
+      <div className=" mt-4">
         <p
-          className="text-lg font-semibold cursor-pointer"
+          className=" cursor-pointer"
           onClick={() => setShowBalance(!showBalance)}
         >
           Current Balance:{" "}

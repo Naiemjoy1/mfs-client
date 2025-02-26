@@ -23,7 +23,7 @@ const History = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         History
       </p>

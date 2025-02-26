@@ -83,14 +83,11 @@ const CashInRequest = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         Cash In Request
       </p>
-      <h2
-        onClick={toggleBalanceVisibility}
-        className="cursor-pointer text-lg font-bold"
-      >
+      <h2 onClick={toggleBalanceVisibility} className="cursor-pointer">
         Current Balance:
         <span className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}>
           {isBalanceVisible ? currentUser?.balance : "******"}

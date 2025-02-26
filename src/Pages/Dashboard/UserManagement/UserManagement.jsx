@@ -69,7 +69,7 @@ const UserManagement = () => {
   );
 
   return (
-    <div className="relative">
+    <div className="relative p-10">
       <input
         type="text"
         placeholder="Search by email or phone"

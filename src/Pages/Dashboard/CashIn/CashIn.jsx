@@ -38,7 +38,6 @@ const CashIn = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    // Prevent users from sending money
     if (currentUser?.userType !== "agent") {
       Swal.fire({
         title: "Error!",
@@ -73,8 +72,8 @@ const CashIn = () => {
           text: response.data.message,
           icon: "success",
         });
-        reset(); // Reset form fields
-        refetchUsers(); // Refetch users data
+        reset();
+        refetchUsers();
       } else {
         Swal.fire("Cancelled", "Transaction cancelled.", "info");
       }
@@ -90,15 +89,12 @@ const CashIn = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         cash in
       </p>
       <div className="lg:flex justify-between items-center">
-        <p
-          onClick={toggleBalanceVisibility}
-          className="cursor-pointer text-lg font-bold"
-        >
+        <p onClick={toggleBalanceVisibility} className="cursor-pointer">
           Current Balance:
           <span
             className={`ml-2 ${isBalanceVisible ? "text-black" : "blur-sm"}`}

@@ -82,7 +82,7 @@ const CashRequest = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <p className="text-center text-2xl font-bold text-primary uppercase">
         cash request
       </p>
