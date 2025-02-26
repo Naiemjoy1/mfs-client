@@ -1,16 +1,16 @@
 # Mobile Financial Service (MFS) Client
 
-This is the client-side application for a basic Mobile Financial Service (MFS) like bKash or Nagad. It is built using React.js and various other libraries to provide a secure and responsive user interface.
+This is the client-side application for a Mobile Financial Service (MFS) similar to bKash or Nagad. It is built using React.js and various other libraries to provide a secure and responsive user interface.
 
 ## Live Link
 
-- [Live Demo](https://mobile-financial-service-8e757.web.app/){:target="\_blank"}
+- [Live Application](https://mobile-financial-service-8e757.web.app/)
 
-## Server GitHub
+## Server Repository
 
-- [MFS Server Repository](https://github.com/Naiemjoy1/mfs-server){:target="\_blank"}
+- [MFS Server on GitHub](https://github.com/Naiemjoy1/mfs-server)
 
-## Users
+## Users & Credentials
 
 ### Admin
 
@@ -27,118 +27,94 @@ This is the client-side application for a basic Mobile Financial Service (MFS) l
 - **Email:** user1@mfs.com
 - **Password:** 12345
 
+---
+
 ## Features
 
-- User Registration and Secure Login (JWT)
-- Send Money with Fee Handling
-- Cash In via Agents (No Fee)
-- Cash Withdrawal with 1.5% Fee
-- Cash Request & Cash-Out
-- Balance Inquiry with Hidden Display
-- Transaction History (Last 100 Transactions)
-- Role-Based Dashboards (User, Agent, Admin)
+### General Features
+
+- User Registration and Login (JWT Authentication, Secure Routes)
+- Send Money (Fee Applied for Transactions Over 100 Taka)
+- Cash-In (Free)
+- Cash Withdrawal (1.5% Fee)
+- Balance Inquiry
+- Transaction History
+- Role-Based Dashboard (User, Agent, Admin)
+- Secure Authentication (JWT & Hash Encryption)
+- One Device Login Restriction
+
+### Role-Specific Features
+
+#### **User**
+
+- Register and receive a **40 Taka** bonus.
+- Send money to other users (**5 Taka fee for transactions over 100 Taka**).
+- Cash-in from an agent **without any fee**.
+- Cash-out via an agent (**1.5% fee applied**).
+- View balance (Initially blurred, revealed on click).
+- View transaction history.
+
+#### **Agent**
+
+- Register and wait for **admin approval**.
+- Receive an initial balance of **100,000 Taka**.
+- Request balance recharge from the admin.
+- Earn **1% commission** on user cash-outs.
+- View earnings (Initially blurred, revealed on click).
+- View transaction history.
+
+#### **Admin**
+
+- Manage users (View balances, transaction history, and block accounts).
+- Verify and approve agents.
+- Add money to agent accounts.
+- Earn **0.5% from cash-out transactions**.
+- Earn **5 Taka from every monetary operation**.
+- Monitor the **total money in the system**.
+- Approve or reject agent balance recharge requests.
+- Approve or reject agent withdrawal requests.
+
+---
 
 ## Tech Stack
 
-- React.js
-- Axios
-- React Query
-- React Hook Form
-- Recharts
-- PropTypes
-- React Router DOM
-- SweetAlert2
+- **Frontend:** React.js, React Query, Axios, React Router DOM, Sweetalert2, Recharts
+- **Backend:** Node.js, Express.js, MongoDB, Mongoose
+- **Security:** JWT Authentication, Hash Encryption
 
-## Installation Guide
+---
 
-1. Clone the repository:
+## Installation
+
+1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/Naiemjoy1/mfs-client
+   git clone https://github.com/Naiemjoy1/mfs-client.git
    ```
 
-2. Navigate to the project directory:
+2. **Navigate to Project Directory:**
 
    ```bash
    cd mfs-client
    ```
 
-3. Install dependencies:
+3. **Install Dependencies:**
 
    ```bash
    npm install
    ```
 
-4. Start the application:
+4. **Start the Application:**
    ```bash
    npm start
    ```
 
 ---
 
-## Assessment-Based Features
+## Additional Functionalities
 
-### Account Types
+- **Cash Request (Agent):** Agents can request balance recharge from the admin.
+- **Withdraw Request (Agent):** Agents can request withdrawal approval from the admin.
+- **Admin Withdrawal Approval:** Admins can accept/reject agent withdrawal requests.
 
-The system supports three roles:
-
-- **User**
-
-  - Can register with unique details (Mobile, Email, NID).
-  - Receives **40 Taka bonus** on sign-up.
-  - Can send money (5 Taka fee for amounts over 100 Taka).
-  - Can cash-in through an agent **(No Fee)**.
-  - Can cash-out through an agent **(1.5% Fee)**.
-
-- **Agent**
-
-  - Can register and request admin approval.
-  - Starts with **100,000 Taka** in balance.
-  - Can request a balance recharge from the admin.
-  - Earns **1% commission** on cash-outs.
-
-- **Admin**
-  - Can **approve agents**, **manage users**, and **block accounts**.
-  - Can add money to agents.
-  - Earns **0.5% from cash-outs** and **5 Taka per transaction**.
-  - Monitors **total money in the system**.
-
-### Secure Authentication
-
-- Secure **JWT authentication**.
-- Encrypted PIN with **bcrypt**.
-- **One-device login restriction** for security.
-
-### Money Transactions
-
-- **Send Money**
-  - Minimum amount: **50 Taka**
-  - Fee: **5 Taka** for amounts **over 100 Taka**
-  - Updates sender, receiver, and admin balances.
-- **Cash-Out**
-  - **1.5% fee**
-  - Admin earns **0.5%**, agent earns **1%**.
-- **Cash-In**
-  - No fees.
-  - Updates **user balance** and **system total**.
-- **Balance Inquiry**
-  - Balance is **blurred by default** for privacy.
-  - Click to reveal.
-- **User Management (Admin)**
-  - View user balances & transaction history.
-  - Search by **phone number**.
-- **Agent Approval (Admin)**
-  - Accept/reject agent requests.
-
-### Additional Features
-
-- **Cash Request (Agent → Admin)**
-- **Withdraw Request (Agent → Admin)**
-- **Admin Withdraw Approval**
-- **Detailed Transaction Tracking**
-
-This project ensures a secure and efficient **Mobile Financial Service** system using **React.js, Node.js, Express.js, MongoDB, and Mongoose**.
-
----
-
-Let me know if you'd like any further refinements! 🚀
+This project serves as a **Skill Assessment Task** to evaluate expertise in building a secure and functional Mobile Financial Service platform using **Node.js, Express.js, React.js, and MongoDB**.
