@@ -76,24 +76,6 @@ const LoginForm = () => {
       className="relative min-h-screen bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${element})` }}
     >
-      <div className="absolute inset-x-0 top-5 lg:w-1/3 mx-auto flex justify-center items-center gap-5 bg-[#eff3f4] py-5 rounded-lg shadow-md">
-        <a
-          href="https://github.com/Naiemjoy1/mfs-client"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary  hover:underline"
-        >
-          GitHub Client Side
-        </a>
-        <a
-          href="https://github.com/Naiemjoy1/mfs-server"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary  hover:underline"
-        >
-          GitHub Server Side
-        </a>
-      </div>
       <div className="h-screen lg:w-1/3 mx-auto min-h-[calc(100vh-246px)] flex justify-center items-center">
         {loading || isSubmitting ? (
           <div className="flex flex-col items-center justify-center">
@@ -114,67 +96,87 @@ const LoginForm = () => {
             </div>
           </div>
         ) : (
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="card-body bg-white bg-opacity-80 p-6 rounded-lg shadow-lg"
-          >
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email or Mobile</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Email or mobile"
-                className="input input-bordered"
-                {...register("email", { required: true })}
-              />
-              {errors.email && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">PIN (5 digits)</span>
-              </label>
-              <input
-                type="text"
-                placeholder="PIN"
-                className="input input-bordered"
-                {...register("pin", {
-                  required: true,
-                  minLength: 5,
-                  maxLength: 5,
-                  pattern: /^[0-9]*$/,
-                })}
-                onInput={(e) =>
-                  (e.target.value = e.target.value.replace(/[^0-9]/g, ""))
-                }
-              />
-              {errors.pin && (
-                <span className="text-red-500">
-                  PIN must be exactly 5 digits long
-                </span>
-              )}
-            </div>
-
-            <div className="form-control mt-6">
-              <button
-                type="submit"
-                className="btn btn-primary w-full text-white"
-                disabled={isSubmitting}
+          <>
+            <div className="absolute inset-x-0 top-5 lg:w-1/3 mx-auto flex justify-center items-center gap-5 bg-[#eff3f4] py-5 rounded-lg shadow-md">
+              <a
+                href="https://github.com/Naiemjoy1/mfs-client"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary  hover:underline"
               >
-                Login
-              </button>
-            </div>
-
-            <p className="text-center mt-4">
-              New Here?{" "}
-              <a className="text-primary" href="/registration">
-                Register
+                GitHub Client Side
               </a>
-            </p>
-          </form>
+              <a
+                href="https://github.com/Naiemjoy1/mfs-server"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary  hover:underline"
+              >
+                GitHub Server Side
+              </a>
+            </div>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="card-body bg-white bg-opacity-80 p-6 rounded-lg shadow-lg"
+            >
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email or Mobile</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Email or mobile"
+                  className="input input-bordered"
+                  {...register("email", { required: true })}
+                />
+                {errors.email && (
+                  <span className="text-red-500">This field is required</span>
+                )}
+              </div>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">PIN (5 digits)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="PIN"
+                  className="input input-bordered"
+                  {...register("pin", {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                    pattern: /^[0-9]*$/,
+                  })}
+                  onInput={(e) =>
+                    (e.target.value = e.target.value.replace(/[^0-9]/g, ""))
+                  }
+                />
+                {errors.pin && (
+                  <span className="text-red-500">
+                    PIN must be exactly 5 digits long
+                  </span>
+                )}
+              </div>
+
+              <div className="form-control mt-6">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-full text-white"
+                  disabled={isSubmitting}
+                >
+                  Login
+                </button>
+              </div>
+
+              <p className="text-center mt-4">
+                New Here?{" "}
+                <a className="text-primary" href="/registration">
+                  Register
+                </a>
+              </p>
+            </form>
+          </>
         )}
       </div>
     </div>
