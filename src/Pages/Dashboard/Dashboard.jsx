@@ -23,9 +23,28 @@ const Dashboard = () => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex justify-center items-center"
+      className=" min-h-screen bg-cover bg-center flex justify-center items-center relative"
       style={{ backgroundImage: `url(${element})` }}
     >
+      <div className="absolute inset-x-0 top-5 container mx-auto flex justify-center items-center gap-5 bg-[#eff3f4] py-5 rounded-lg shadow-md">
+        <a
+          href="https://github.com/Naiemjoy1/mfs-client"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary  hover:underline"
+        >
+          GitHub Client Side
+        </a>
+        <a
+          href="https://github.com/Naiemjoy1/mfs-server"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary  hover:underline"
+        >
+          GitHub Server Side
+        </a>
+      </div>
+
       <div className="container mx-auto py-12 lg:flex space-y-4 lg:space-y-0 gap-4">
         <div className="lg:w-1/4 bg-[#eff3f4] px-10 py-6 rounded-xl shadow-2xl flex flex-col justify-between gap-5">
           <section>

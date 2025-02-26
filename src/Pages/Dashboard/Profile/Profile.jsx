@@ -1,17 +1,27 @@
 import { useState } from "react";
 import useAuth from "../../../Components/Hooks/useAuth";
+import useIncome from "../../../Components/Hooks/useIncome";
+import useRole from "../../../Components/Hooks/useRole";
 import useUsers from "../../../Components/Hooks/useUsers";
 
 const Profile = () => {
   const { user } = useAuth();
   const { users } = useUsers();
+  const [userRole] = useRole();
+  const [income] = useIncome();
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+
   const currentUser = users.find((u) => u.email === user.email);
   const isOnline = currentUser?.status === "active";
-  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
 
   const toggleBalanceVisibility = () => {
     setIsBalanceVisible(!isBalanceVisible);
   };
+
+  const showIncome = userRole === "admin" || userRole === "agent";
+
+  const userIncome = income.find((inc) => inc.receiver === user.email);
+  const totalIncome = userIncome ? userIncome.totalAmount : 0;
 
   return (
     <div className="flex justify-center items-center h-full">
@@ -20,7 +30,10 @@ const Profile = () => {
           <div className={`avatar ${isOnline ? "online" : "offline"}`}>
             <div className="w-24 rounded-full ring-4 ring-white">
               <img
-                src={currentUser?.profileImage}
+                src={
+                  currentUser?.profileImage ||
+                  "https://i.ibb.co/XFrjNzN/pexels-olly-842811.jpg"
+                }
                 alt="Profile"
                 className="w-full h-full rounded-full"
               />
@@ -39,6 +52,19 @@ const Profile = () => {
               {isBalanceVisible ? currentUser?.balance : "******"}
             </span>
           </p>
+
+          {showIncome && (
+            <p onClick={toggleBalanceVisibility} className="cursor-pointer">
+              Income:
+              <span
+                className={`ml-2 ${
+                  isBalanceVisible ? "text-white" : "blur-sm"
+                }`}
+              >
+                {isBalanceVisible ? totalIncome.toFixed(2) : "******"}
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </div>

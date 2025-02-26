@@ -73,9 +73,27 @@ const LoginForm = () => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex justify-center items-center"
+      className="relative min-h-screen bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${element})` }}
     >
+      <div className="absolute inset-x-0 top-5 lg:w-1/3 mx-auto flex justify-center items-center gap-5 bg-[#eff3f4] py-5 rounded-lg shadow-md">
+        <a
+          href="https://github.com/Naiemjoy1/mfs-client"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary  hover:underline"
+        >
+          GitHub Client Side
+        </a>
+        <a
+          href="https://github.com/Naiemjoy1/mfs-server"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary  hover:underline"
+        >
+          GitHub Server Side
+        </a>
+      </div>
       <div className="h-screen lg:w-1/3 mx-auto min-h-[calc(100vh-246px)] flex justify-center items-center">
         {loading || isSubmitting ? (
           <div className="flex flex-col items-center justify-center">

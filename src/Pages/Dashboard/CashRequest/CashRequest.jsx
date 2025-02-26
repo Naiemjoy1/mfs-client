@@ -188,7 +188,7 @@ const CashRequest = () => {
               }`}
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Cash Out Request"}
+              {loading ? "Sending..." : "Send Cash Request"}
             </button>
           ) : (
             <button

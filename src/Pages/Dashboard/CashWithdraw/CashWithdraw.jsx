@@ -189,7 +189,7 @@ const CashWithdraw = () => {
               }`}
               disabled={loading}
             >
-              {loading ? "Sending..." : "Send Cash Out Request"}
+              {loading ? "Sending..." : "Send Cash Withdraw Request"}
             </button>
           ) : (
             <button

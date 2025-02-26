@@ -104,7 +104,15 @@ const UserManagement = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
-                            <img src={user?.profileImage} alt="User Avatar" />
+                            {/* <img src={user?.profileImage} alt="User Avatar" /> */}
+                            <img
+                              src={
+                                user?.profileImage ||
+                                "https://i.ibb.co/XFrjNzN/pexels-olly-842811.jpg"
+                              }
+                              alt="Profile"
+                              className="w-full h-full rounded-full"
+                            />
                           </div>
                         </div>
                       </div>
@@ -129,20 +137,24 @@ const UserManagement = () => {
                       </select>
                     </td>
                     <td>
-                      {user.status === "active" ? (
-                        <button
-                          onClick={() => handleChangeStatus(user, "block")}
-                          className="btn bg-yellow-500 hover:bg-yellow-600 text-white btn-xs"
-                        >
-                          <FaUserLargeSlash />
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleChangeStatus(user, "active")}
-                          className="btn bg-green-500 hover:bg-green-600 text-white btn-xs"
-                        >
-                          <IoMdCheckmarkCircle />
-                        </button>
+                      {user.userType !== "admin" && (
+                        <>
+                          {user.status === "active" ? (
+                            <button
+                              onClick={() => handleChangeStatus(user, "block")}
+                              className="btn bg-green-500 hover:bg-green-600 text-white btn-xs"
+                            >
+                              <IoMdCheckmarkCircle />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleChangeStatus(user, "active")}
+                              className="btn bg-yellow-500 hover:bg-yellow-600  text-white btn-xs"
+                            >
+                              <FaUserLargeSlash />
+                            </button>
+                          )}
+                        </>
                       )}
                     </td>
                     <td>
